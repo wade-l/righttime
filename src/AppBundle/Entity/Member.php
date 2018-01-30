@@ -32,7 +32,6 @@ class Member
 
     public function __construct()
     {
-        parent::__construct();
         // your own logic
     }
 
@@ -74,5 +73,13 @@ class Member
         $this->game = $game;
 
         return $this;
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
     }
 }

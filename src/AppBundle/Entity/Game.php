@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Game
@@ -51,7 +52,6 @@ class Game
 
     public function __construct()
     {
-        parent::__construct();
         $this->members = new ArrayCollection();
     }
 
@@ -155,6 +155,14 @@ class Game
         $this->members = $members;
 
         return $this;
+    }
+
+    /**
+     * String representation of a game
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
 
