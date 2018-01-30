@@ -13,7 +13,7 @@ class MemberType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user')->add('game');
+        $builder->add('user')->add('game')->add('position');
     }/**
      * {@inheritdoc}
      */

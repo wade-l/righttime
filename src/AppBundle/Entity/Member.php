@@ -30,6 +30,13 @@ class Member
      */
     private $game;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="string", length=255, nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         // your own logic
@@ -81,5 +88,29 @@ class Member
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get the value of position
+     *
+     * @return  string
+     */ 
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set the value of position
+     *
+     * @param  string  $position
+     *
+     * @return  self
+     */ 
+    public function setPosition(string $position)
+    {
+        $this->position = $position;
+
+        return $this;
     }
 }
