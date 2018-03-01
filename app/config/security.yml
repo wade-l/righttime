@@ -18,7 +18,7 @@ security:
         in_memory:
             memory:
                 users:
-                    admin:
+                    admin: # Default admin user, password 'password'
                         password: $2y$13$bJPTMjJXpb5pGcOU3gfIk.Av/D7TDkLFiTsgzazSQ6IV8OjfIa6yW
                         roles: 'ROLE_ADMIN'
         fos_userbundle:

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -72,10 +73,12 @@ class GameController extends Controller
     public function showAction(Game $game)
     {
         $deleteForm = $this->createDeleteForm($game);
+        $joinForm = $this->createJoinForm($game);
 
         return $this->render('game/show.html.twig', array(
             'game' => $game,
             'delete_form' => $deleteForm->createView(),
+            'join_form' => $joinForm->createView(),
         ));
     }
 
@@ -125,6 +128,20 @@ class GameController extends Controller
     }
 
     /**
+     * Joins a game.
+     *
+     * @Route("/{id}/join", name="game_join")
+     * @Method({"GET", "POST"})
+     */
+    public function joinAction(Request $request, Game $game, User $user)
+    {
+        $form = $this->createJoinForm($game);
+        $form->handleRequest($request);
+
+        return $this->redirectToRoute('game_index');
+    }
+
+    /**
      * Creates a form to delete a game entity.
      *
      * @param Game $game The game entity
@@ -136,6 +153,22 @@ class GameController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('game_delete', array('id' => $game->getId())))
             ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
+
+    /**
+     * Creates a form to join a game.
+     *
+     * @param Game $game The game entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createJoinForm(Game $game)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('game_join', array('id' => $game->getId())))
+            ->setMethod('POST')
             ->getForm()
         ;
     }
