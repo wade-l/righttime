@@ -21,12 +21,12 @@ class Member
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="member")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="members")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Game", inversedBy="member")
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="members")
      */
     private $game;
 
