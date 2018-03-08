@@ -72,5 +72,45 @@ class Character
     {
         return $this->name;
     }
+
+    /**
+     * Get the value of player
+     */ 
+    public function getPlayer()
+    {
+        return $this->player;
+    }
+
+    /**
+     * Set the value of player
+     *
+     * @return  self
+     */ 
+    public function setPlayer($player)
+    {
+        $this->player = $player;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of game
+     */ 
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * Set the value of game
+     *
+     * @return  self
+     */ 
+    public function setGame($game)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
 }
 
