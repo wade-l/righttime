@@ -24,10 +24,16 @@ class User extends BaseUser
      */
     private $members;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="player")
+     */
+    private $characters;
+
     public function __construct()
     {
         parent::__construct();
         $this->members = new ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     /**

@@ -49,10 +49,16 @@ class Game
      * @ORM\OneToMany(targetEntity="Member", mappedBy="game")
      */
     private $members;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="game")
+     */
+    private $characters;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     /**
