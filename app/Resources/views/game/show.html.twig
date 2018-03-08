@@ -28,15 +28,16 @@
                         {% for member in game.members %}
                         <tr>
                             <td>
-                                {{ member.id }}
+                                {{ member.user.username}}
                             </td>
                             <td>
-                                {{ member.user.username}}
+                                ( {{member.position}} )
                             </td>
                         </td>
                         {% endfor %}
                     </table>
                 </td>
+            </tr>
         </tbody>
     </table>
 

@@ -9,6 +9,22 @@
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>
+            <tr>
+                <th>Member of these games:</th>
+                <td>
+                    <table>
+                        {% for member in user.members %}
+                        <tr>
+                            <td>
+                                {{ member.game.name}}
+                            </td>
+                            <td>
+                                ( {{member.position}} )
+                            </td>
+                        </td>
+                        {% endfor %}
+                    </table>
+                </td>
         </tbody>
     </table>
 

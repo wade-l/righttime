@@ -4,12 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Member;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * Game controller.
@@ -18,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GameController extends Controller
 {
+
     /**
      * Lists all game entities.
      *
@@ -87,12 +90,16 @@ class GameController extends Controller
      *
      * @Route("/{id}/edit", name="game_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, Game $game)
     {
         $deleteForm = $this->createDeleteForm($game);
         $editForm = $this->createForm('AppBundle\Form\GameType', $game);
         $editForm->handleRequest($request);
+
+        $somevar = "testEdit";
+        dump($somevar);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -112,17 +119,20 @@ class GameController extends Controller
      *
      * @Route("/{id}", name="game_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Game $game)
     {
         $form = $this->createDeleteForm($game);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($game);
             $em->flush();
         }
+
 
         return $this->redirectToRoute('game_index');
     }
@@ -132,12 +142,27 @@ class GameController extends Controller
      *
      * @Route("/{id}/join", name="game_join")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function joinAction(Request $request, Game $game, User $user)
+    public function joinAction(Request $request, Game $game)
     {
+              
         $form = $this->createJoinForm($game);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $member = new Member();
+            $member->setUser($user);
+            $member->setGame($game);
+            $member->setPosition("Player");
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($member);
+            $em->flush();
+
+        }
         return $this->redirectToRoute('game_index');
     }
 
