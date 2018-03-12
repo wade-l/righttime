@@ -13,7 +13,15 @@ class CharacterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('player')->add('game');
+        $builder->
+            add('name')
+            ->add('player', null, array( 'disabled' => 'true'))
+            ->add('game', null, array(
+                'choices' => array(
+                    'Yes' => 'yes',
+                    'No' => 'no',
+                )
+            ));
     }/**
      * {@inheritdoc}
      */

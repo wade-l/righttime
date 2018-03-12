@@ -40,6 +40,8 @@ class CharacterController extends Controller
     public function newAction(Request $request)
     {
         $character = new Character();
+        $character->setPlayer($this->getUser());
+
         $form = $this->createForm('AppBundle\Form\CharacterType', $character);
         $form->handleRequest($request);
 
