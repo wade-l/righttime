@@ -42,7 +42,9 @@ class CharacterController extends Controller
         $character = new Character();
         $character->setPlayer($this->getUser());
 
-        $form = $this->createForm('AppBundle\Form\CharacterType', $character);
+        $form = $this->createForm('AppBundle\Form\CharacterType', $character, array(
+            'choices' => array('My'=>'Mother','Said'=>'To','Pick'=>'The'),
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
