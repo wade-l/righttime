@@ -40,10 +40,20 @@ class CharacterController extends Controller
     public function newAction(Request $request)
     {
         $character = new Character();
-        $character->setPlayer($this->getUser());
+        $player = $this->getUser();
+
+        if ( $player != null ) {
+            $character->setPlayer($this->getUser());
+            $games = $this->getDoctrine()
+                    ->getEntityManager()
+                    ->getRepository('AppBundle:Game')
+                    ->findAllByUser($player);
+            dump($character);
+            dump($games);
+        }     
 
         $form = $this->createForm('AppBundle\Form\CharacterType', $character, array(
-            'choices' => array('My'=>'Mother','Said'=>'To','Pick'=>'The'),
+            'games' => $games,
         ));
         $form->handleRequest($request);
 

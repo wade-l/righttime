@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Game;
+use AppBundle\Entity\Member;
 
 /**
  * GameRepository
@@ -10,4 +13,14 @@ namespace AppBundle\Repository;
  */
 class GameRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findAllByUser(User $user) {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('g')
+            ->from('AppBundle:Game','g')
+            ->innerJoin('g', 'AppBundle:Member', 'm', 'g.id = m.game_id')
+            ->getQuery()
+            ->getResult();
+    }
 }

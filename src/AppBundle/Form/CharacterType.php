@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,11 +29,19 @@ class CharacterType extends AbstractType
             $builder->add('player', null, array(
                 'disabled' => 'true',
             ));
-
         } else {
             $builder->add('player');
+        }
+
+        if ( $options['games'] != null ) {
+            $builder->add('game', EntityType::class, array(
+                'class' => Game::class,
+                'choices' => $options['games'],
+            ));
+        } else {
             $builder->add('game');
         }
+
  //           ->add('player', null, array( 'disabled' => 'true'))
  //           ->add('game',ChoiceType::class, array(
  //               'choices' => $choices,
@@ -48,6 +57,7 @@ class CharacterType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Character',
             'player' => null,
+            'games' => null,
             'choices' => array(
                 'yes' => 'yes',
                 'maybe' => 'maybe',
