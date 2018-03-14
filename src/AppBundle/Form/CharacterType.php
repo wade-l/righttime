@@ -42,13 +42,6 @@ class CharacterType extends AbstractType
             $builder->add('game');
         }
 
- //           ->add('player', null, array( 'disabled' => 'true'))
- //           ->add('game',ChoiceType::class, array(
- //               'choices' => $choices,
-//            ))
-//            ->add('game', EntityType::class, array(
- //               'class' => Game::class
- //           ));
     }/**
      * {@inheritdoc}
      */

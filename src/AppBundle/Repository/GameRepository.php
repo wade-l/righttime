@@ -15,11 +15,14 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
 {
 
     public function findAllByUser(User $user) {
+        $user_id = $user->getId();
         return $this->getEntityManager()
-            ->createQueryBuilder()
+            ->createQueryBuilder('g')
             ->select('g')
             ->from('AppBundle:Game','g')
-            ->innerJoin('g', 'AppBundle:Member', 'm', 'g.id = m.game_id')
+            ->innerJoin('g.members', 'm')
+            ->where('m.user = :user')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }

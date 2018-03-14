@@ -37,6 +37,14 @@ class User extends BaseUser
     }
 
     /**
+     * Get the id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get the value of members
      */ 
     public function getMembers()

@@ -48,8 +48,6 @@ class CharacterController extends Controller
                     ->getEntityManager()
                     ->getRepository('AppBundle:Game')
                     ->findAllByUser($player);
-            dump($character);
-            dump($games);
         }     
 
         $form = $this->createForm('AppBundle\Form\CharacterType', $character, array(
@@ -95,8 +93,20 @@ class CharacterController extends Controller
      */
     public function editAction(Request $request, Character $character)
     {
+        
+        $player = $character->getPlayer();
+
+        if ( $player != null ) {
+            $games = $this->getDoctrine()
+                    ->getEntityManager()
+                    ->getRepository('AppBundle:Game')
+                    ->findAllByUser($player);
+        } 
+        
         $deleteForm = $this->createDeleteForm($character);
-        $editForm = $this->createForm('AppBundle\Form\CharacterType', $character);
+        $editForm = $this->createForm('AppBundle\Form\CharacterType', $character,  array(
+            'games' => $games,
+        ));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
