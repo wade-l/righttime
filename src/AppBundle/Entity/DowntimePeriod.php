@@ -49,6 +49,11 @@ class DowntimePeriod
      */
     private $close;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="downtimePeriods")
+     */
+    private $game;
+
 
     /**
      * Get id
@@ -109,51 +114,71 @@ class DowntimePeriod
     }
 
     /**
-     * Set openDate
+     * Set open
      *
-     * @param \DateTime $openDate
+     * @param \DateTime $open
      *
      * @return DowntimePeriod
      */
-    public function setOpenDate($openDate)
+    public function setOpen($open)
     {
-        $this->openDate = $openDate;
+        $this->open = $open;
 
         return $this;
     }
 
     /**
-     * Get openDate
+     * Get open
      *
      * @return \DateTime
      */
-    public function getOpenDate()
+    public function getOpen()
     {
-        return $this->openDate;
+        return $this->open;
     }
 
     /**
-     * Set closeDate
+     * Set close
      *
-     * @param \DateTime $closeDate
+     * @param \DateTime $close
      *
      * @return DowntimePeriod
      */
-    public function setCloseDate($closeDate)
+    public function setClose($close)
     {
-        $this->closeDate = $closeDate;
+        $this->close = $close;
 
         return $this;
     }
 
     /**
-     * Get closeDate
+     * Get close
      *
      * @return \DateTime
      */
-    public function getCloseDate()
+    public function getClose()
     {
-        return $this->closeDate;
+        return $this->close;
+    }
+
+    /**
+     * Get the value of game
+     */ 
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * Set the value of game
+     *
+     * @return  self
+     */ 
+    public function setGame($game)
+    {
+        $this->game = $game;
+
+        return $this;
     }
 }
 

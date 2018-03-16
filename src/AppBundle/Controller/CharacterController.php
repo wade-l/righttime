@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Character;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Character controller.
@@ -45,9 +46,10 @@ class CharacterController extends Controller
         if ( $player != null ) {
             $character->setPlayer($this->getUser());
             $games = $this->getDoctrine()
-                    ->getEntityManager()
+                    ->getManager()
                     ->getRepository('AppBundle:Game')
                     ->findAllByUser($player);
+            dump($games);
         }     
 
         $form = $this->createForm('AppBundle\Form\CharacterType', $character, array(
@@ -93,20 +95,8 @@ class CharacterController extends Controller
      */
     public function editAction(Request $request, Character $character)
     {
-        
-        $player = $character->getPlayer();
-
-        if ( $player != null ) {
-            $games = $this->getDoctrine()
-                    ->getEntityManager()
-                    ->getRepository('AppBundle:Game')
-                    ->findAllByUser($player);
-        } 
-        
         $deleteForm = $this->createDeleteForm($character);
-        $editForm = $this->createForm('AppBundle\Form\CharacterType', $character,  array(
-            'games' => $games,
-        ));
+        $editForm = $this->createForm('AppBundle\Form\CharacterType', $character);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

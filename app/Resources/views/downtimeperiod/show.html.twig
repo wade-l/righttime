@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Downtimeperiod</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ downtimePeriod.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ downtimePeriod.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ downtimePeriod.description }}</td>
+            </tr>
+            <tr>
+                <th>Open</th>
+                <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Close</th>
+                <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('downtimeperiod_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

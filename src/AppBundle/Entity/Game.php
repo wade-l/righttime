@@ -55,10 +55,16 @@ class Game
      */
     private $characters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="DowntimePeriod", mappedBy="game")
+     */
+    private $downtimePeriods;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->characters = new ArrayCollection();
+        $this->downtimePeriods = new ArrayCollection();
     }
 
     /**
@@ -187,6 +193,26 @@ class Game
     public function setCharacters($characters)
     {
         $this->characters = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of downtimePeriods
+     */ 
+    public function getDowntimePeriods()
+    {
+        return $this->downtimePeriods;
+    }
+
+    /**
+     * Set the value of downtimePeriods
+     *
+     * @return  self
+     */ 
+    public function setDowntimePeriods($downtimePeriods)
+    {
+        $this->downtimePeriods = $downtimePeriods;
 
         return $this;
     }

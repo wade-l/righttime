@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Downtimeperiods list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for downtimePeriod in downtimePeriods %}
+            <tr>
+                <td><a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">{{ downtimePeriod.id }}</a></td>
+                <td>{{ downtimePeriod.name }}</td>
+                <td>{{ downtimePeriod.description }}</td>
+                <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('downtimeperiod_new') }}">Create a new downtimePeriod</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -15,9 +15,46 @@ class GameVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, array(self::ORGANIZE)) {
+        // Check that we support the attribute
+        if (!in_array($attribute, array(self::ORGANIZE))) {
             return false;
         }
+
+        // We only vote on Games
+        if (!$subject instanceof Game) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    {
+        $user-> $token->getUser();
+
+        if (!$user instanceof User) {
+            // the user must be logged in; if not, deny access
+            return false;
+        }
+
+        $game = $subject;
+
+        switch ($attribute) {
+            case self::ORGANIZE:
+                return $this->canOrganize($game, $user);
+        }
+    }
+
+    private function canOrganize(Game $game, User $user) {
+        $user_memberships = $user->getMembers();
+
+        foreach ($user_memberships->getIterator() as $iterator => $member) {
+            if ( ( $member->getGame() == $game ) && ($member->getPosition () == $member->POSITION_ORGANIZER) ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

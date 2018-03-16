@@ -26,4 +26,19 @@ class GameRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllByUserAndPosition(User $user, $position) {
+        $user_id = $user->getId();
+        return $this->getEntityManager()
+            ->createQueryBuilder('g')
+            ->select('g')
+            ->from('AppBundle:Game','g')
+            ->innerJoin('g.members', 'm')
+            ->where('m.user = :user')
+            ->andWhere('m.position = :position')
+            ->setParameter('user', $user)
+            ->setParameter('position', $position)
+            ->getQuery()
+            ->getResult();
+    }
 }

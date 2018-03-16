@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Member
 {
+    const POSITION_ORGANIZER = 'organizer';
+    const POSITION_PLAYER = 'player';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

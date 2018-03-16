@@ -2,36 +2,20 @@
 
 namespace AppBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use AppBundle\Entity\Character;
 use AppBundle\Entity\Game;
 
-class CharacterType extends AbstractType
+class DowntimePeriodType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = $options['choices'];
-
-        $entity = $builder->getData();
-
-        $player = $entity->getPlayer();
-
         $builder->add('name');
-        if ( $player != null) {
-            $builder->add('player', null, array(
-                'disabled' => 'true',
-            ));
-        } else {
-            $builder->add('player');
-        }
 
         if ( $options['games'] != null ) {
             $builder->add('game', EntityType::class, array(
@@ -41,16 +25,17 @@ class CharacterType extends AbstractType
         } else {
             $builder->add('game');
         }
-
-    }/**
+        $builder->add('description')->add('open')->add('close');
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Character',
-            'player' => null,
-            'games' => null,            
+            'data_class' => 'AppBundle\Entity\DowntimePeriod',
+            'games' => null,
         ));
     }
 
@@ -59,7 +44,7 @@ class CharacterType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_character';
+        return 'appbundle_downtimeperiod';
     }
 
 
