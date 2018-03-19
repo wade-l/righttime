@@ -50,9 +50,7 @@ class DowntimePeriodController extends Controller
                 ->findAllByUserAndPosition($this->getUser(), 'organizer');
 
         $downtimePeriod = new Downtimeperiod();
-        $form = $this->createForm('AppBundle\Form\DowntimePeriodType', $downtimePeriod, array(
-            'games' => $games,
-        ));
+        $form = $this->createForm('AppBundle\Form\DowntimePeriodType', $downtimePeriod);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

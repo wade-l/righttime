@@ -43,7 +43,7 @@
 
     <div id="game-add-downtimeperiod">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {{ render(controller('App\\Controller\\GameController:downtimePeriodForm', {'id': game.id})) }}
+            {{ render(controller('AppBundle\\Controller\\GameController:addDowntimePeriodForm', {'id': game.id})) }}
         {% else %}
             <p>
                 <a class="btn btn-success" href="{{ path('security_login', {'redirect_to': app.request.pathInfo}) }}">

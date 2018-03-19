@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Entity\Game;
 
 class DowntimePeriodType extends AbstractType
@@ -15,17 +16,13 @@ class DowntimePeriodType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
+        $entity = $builder->getData();
 
-        if ( $options['games'] != null ) {
-            $builder->add('game', EntityType::class, array(
-                'class' => Game::class,
-                'choices' => $options['games'],
-            ));
-        } else {
-            $builder->add('game');
-        }
-        $builder->add('description')->add('open')->add('close');
+        $game = $entity->getGame();
+
+        $builder->add('name')->add('game', EntityType::class, array(
+            'class' => 'AppBundle:game',
+        ))->add('description')->add('open')->add('close');
     }
     
     /**
@@ -35,7 +32,6 @@ class DowntimePeriodType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\DowntimePeriod',
-            'games' => null,
         ));
     }
 

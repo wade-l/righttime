@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Game;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Member;
+use AppBundle\Entity\DowntimePeriod;
+use AppBundle\Form\DowntimePeriodType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -167,18 +169,16 @@ class GameController extends Controller
     }
 
     /**
-     * This controller is called directly via the render() function in the
-     * blog/post_show.html.twig template. That's why it's not needed to define
-     * a route name for it.
-     *
-     * The "id" of the Post is passed in and then turned into a Post object
-     * automatically by the ParamConverter.
+     * Called via render to create Downtime periods attached to a game.
      */
-    public function addDowntimePeriod(Game $game): Response
+    public function addDowntimePeriodForm(Game $game)
     {
-        $form = $this->createForm(CommentType::class);
-        return $this->render('blog/_comment_form.html.twig', [
-            'post' => $post,
+        $downtimeperiod = new DowntimePeriod();
+        $downtimeperiod->setGame($game);
+        $downtimeperiod->setName("Downtime for " . date('F Y'));
+        $form = $this->createForm('AppBundle\Form\DowntimePeriodType', $downtimeperiod);
+        return $this->render('downtimeperiod/_add.html.twig', [
+            'game' => $game,
             'form' => $form->createView(),
         ]);
     }
