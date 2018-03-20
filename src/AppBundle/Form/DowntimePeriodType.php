@@ -20,9 +20,7 @@ class DowntimePeriodType extends AbstractType
 
         $game = $entity->getGame();
 
-        $builder->add('name')->add('game', EntityType::class, array(
-            'class' => 'AppBundle:game',
-        ))->add('description')->add('open')->add('close');
+        $builder->add('name')->add('description')->add('open')->add('close');
     }
     
     /**

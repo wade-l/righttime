@@ -3,7 +3,10 @@
 {% block body %}
     <h1>Downtimeperiod creation</h1>
 
-    {{ form_start(form, {method: 'POST', action: path('downtimeperiod_new')}) }}
+    {{ game.name }}
+    {{ game.id }}
+
+    {{ form_start(form, {method: 'POST', action: path('downtimeperiod_new', {'game_id': game.id})}) }}
         {{ form_widget(form) }}
         <input type="submit" value="Create" />
     {{ form_end(form) }}

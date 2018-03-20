@@ -8,6 +8,8 @@ use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -37,19 +39,17 @@ class DowntimePeriodController extends Controller
     /**
      * Creates a new downtimePeriod entity.
      *
-     * @Route("/new", name="downtimeperiod_new")
-     * #Security("has_role('ROLE_ORGANIZER')")
+     * @Route("/new/{game_id}", name="downtimeperiod_new")
+     * @ParamConverter("game", class="AppBundle:Game", options={"id" = "game_id"})
+     * @Security("has_role('ROLE_ORGANIZER')")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Game $game)
     {
-
-        $games = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('AppBundle:Game')
-                ->findAllByUserAndPosition($this->getUser(), 'organizer');
-
+ 
         $downtimePeriod = new Downtimeperiod();
+        $downtimePeriod->setGame($game);
+
         $form = $this->createForm('AppBundle\Form\DowntimePeriodType', $downtimePeriod);
         $form->handleRequest($request);
 
