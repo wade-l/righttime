@@ -20,13 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
 class DowntimePeriodController extends Controller
 {
     /**
-     * Lists all downtimePeriod entities.
+     * Lists show all downtime periods by game and character
      *
      * @Route("/", name="downtimeperiod_index")
      * @Method("GET")
      */
     public function indexAction()
     {
+        //TODO
         $em = $this->getDoctrine()->getManager();
 
         $downtimePeriods = $em->getRepository('AppBundle:DowntimePeriod')->findAll();
@@ -41,7 +42,7 @@ class DowntimePeriodController extends Controller
      *
      * @Route("/new/{game_id}", name="downtimeperiod_new")
      * @ParamConverter("game", class="AppBundle:Game", options={"id" = "game_id"})
-     * @Security("has_role('ROLE_ORGANIZER')")
+     * @Security("has_role('ROLE_ORGANIZER') and is_granted('organize', game)")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, Game $game)

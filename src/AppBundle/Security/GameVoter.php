@@ -30,7 +30,7 @@ class GameVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user-> $token->getUser();
+        $user = $token->getUser();
 
         if (!$user instanceof User) {
             // the user must be logged in; if not, deny access
@@ -48,8 +48,10 @@ class GameVoter extends Voter
     private function canOrganize(Game $game, User $user) {
         $user_memberships = $user->getMembers();
 
+        dump($user_memberships);
+
         foreach ($user_memberships->getIterator() as $iterator => $member) {
-            if ( ( $member->getGame() == $game ) && ($member->getPosition () == $member->POSITION_ORGANIZER) ) {
+            if ( ( $member->getGame() == $game ) && ($member->getPosition () == 'organizer') ) {
                 return true;
             }
         }

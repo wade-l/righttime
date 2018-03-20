@@ -38,6 +38,15 @@ class Character
      */
     private $game;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Turn", mappedBy="character")
+     */
+    private $turns;
+
+    public function __construct()
+    {
+        $this->turns = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -112,5 +121,26 @@ class Character
 
         return $this;
     }
+
+    /**
+     * Get the value of turns
+     */ 
+    public function getTurns()
+    {
+        return $this->turns;
+    }
+
+    /**
+     * Set the value of turns
+     *
+     * @return  self
+     */ 
+    public function setTurns($turns)
+    {
+        $this->turns = $turns;
+
+        return $this;
+    }
+
 }
 

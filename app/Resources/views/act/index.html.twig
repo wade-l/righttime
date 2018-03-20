@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Acts list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Summary</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for act in acts %}
+            <tr>
+                <td><a href="{{ path('act_show', { 'id': act.id }) }}">{{ act.id }}</a></td>
+                <td>{{ act.summary }}</td>
+                <td>{{ act.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('act_show', { 'id': act.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('act_edit', { 'id': act.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('act_new') }}">Create a new act</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -54,6 +54,11 @@ class DowntimePeriod
      */
     private $game;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Turn", mappedBy="downtimePeriod")
+     */
+    private $turns;    
+
 
     /**
      * Get id

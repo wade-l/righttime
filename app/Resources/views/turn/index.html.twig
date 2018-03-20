@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Turns list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Finalized</th>
+                <th>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for turn in turns %}
+            <tr>
+                <td><a href="{{ path('turn_show', { 'id': turn.id }) }}">{{ turn.id }}</a></td>
+                <td>{% if turn.finalized %}Yes{% else %}No{% endif %}</td>
+                <td>{{ turn.comments }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('turn_show', { 'id': turn.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('turn_edit', { 'id': turn.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('turn_new') }}">Create a new turn</a>
+        </li>
+    </ul>
+{% endblock %}
