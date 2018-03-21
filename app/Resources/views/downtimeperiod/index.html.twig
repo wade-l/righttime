@@ -29,15 +29,9 @@
                         <li>
                             <a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">show</a>
                         </li>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {{ render(controller('AppBundle\\Controller\\DowntimePeriodController:addTurnForm', {'id': downtimePeriod.id})) }}
-                        {% else %}
-                        <p>
-                            <a class="btn btn-success" href="{{ path('security_login', {'redirect_to': app.request.pathInfo}) }}">
-                                <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.sign_in'|trans }}
-                            </a>
-                        </p>
-                        {% endif %}                        
+                        <li>
+                            <a href="{{ path('turn_new', { 'downtime_id': downtimePeriod.id }) }}">create turn</a>
+                        </li>
                         {% if is_granted('CAN_ORGANIZE', downtimePeriod) %}
                         <li>
                             <a href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">edit</a>

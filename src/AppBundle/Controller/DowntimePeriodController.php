@@ -132,21 +132,6 @@ class DowntimePeriodController extends Controller
     }
 
     /**
-     * Called via render to create Downtime periods attached to a game.
-     */
-    public function addTurnForm(DowntimePeriod $Period)
-    {
-        $downtimeperiod = new DowntimePeriod();
-        $downtimeperiod->setGame($game);
-        $downtimeperiod->setName("Downtime for " . date('F Y'));
-        $form = $this->createForm('AppBundle\Form\TurnType', $downtimeperiod);
-        return $this->render('downtimeperiod/_add.html.twig', [
-            'game' => $game,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * Creates a form to delete a downtimePeriod entity.
      *
      * @param DowntimePeriod $downtimePeriod The downtimePeriod entity

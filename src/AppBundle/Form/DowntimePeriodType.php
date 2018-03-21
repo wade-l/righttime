@@ -16,10 +16,9 @@ class DowntimePeriodType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entity = $builder->getData();
 
-        $game = $entity->getGame();
-
+        // We don't need the Game because Downtime Periods should always
+        // be shown in the context of a game.
         $builder->add('name')->add('description')->add('open')->add('close');
     }
     
