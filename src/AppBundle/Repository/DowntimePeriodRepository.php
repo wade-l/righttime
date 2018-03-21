@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * DowntimePeriodRepository
  *
@@ -16,14 +18,15 @@ class DowntimePeriodRepository extends \Doctrine\ORM\EntityRepository
      */     
     public function findAllByPlayer(User $player) {
         //TODO
-        $user_id = $user->getId();
+        $player_id = $player->getId();
         return $this->getEntityManager()
-            ->createQueryBuilder('g')
-            ->select('g')
-            ->from('AppBundle:Game','g')
-            ->innerJoin('g.members', 'm')
-            ->where('m.user = :user')
-            ->setParameter('user', $user)
+            ->createQueryBuilder('d')
+            ->select('d')
+            ->from('AppBundle:DowntimePeriod','d')
+            ->innerJoin('d.game', 'g')
+            ->innerJoin('g.characters', 'c')
+            ->where('c.player = :player')
+            ->setParameter('player', $player)
             ->getQuery()
             ->getResult();
     }

@@ -18,8 +18,6 @@ class CharacterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = $options['choices'];
-
         $entity = $builder->getData();
 
         $player = $entity->getPlayer();

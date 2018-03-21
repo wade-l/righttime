@@ -11,6 +11,7 @@
                 <th>Description</th>
                 <th>Open</th>
                 <th>Close</th>
+                <th>Game</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ downtimePeriod.description }}</td>
                 <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ downtimePeriod.game.name }}</td>
                 <td>
                     <ul>
                         <li>
@@ -36,10 +38,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('downtimeperiod_new') }}">Create a new downtimePeriod</a>
-        </li>
-    </ul>
 {% endblock %}

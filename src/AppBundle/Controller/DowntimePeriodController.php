@@ -30,7 +30,7 @@ class DowntimePeriodController extends Controller
         //TODO
         $em = $this->getDoctrine()->getManager();
 
-        $downtimePeriods = $em->getRepository('AppBundle:DowntimePeriod')->findAll();
+        $downtimePeriods = $em->getRepository('AppBundle:DowntimePeriod')->findAllByPlayer($this->getUser());
 
         return $this->render('downtimeperiod/index.html.twig', array(
             'downtimePeriods' => $downtimePeriods,
