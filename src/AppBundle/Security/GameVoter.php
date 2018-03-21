@@ -5,13 +5,17 @@ namespace AppBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use AppBundle\Entity\Game;
+use AppBundle\Entity\DowntimePeriod;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Member;
 
+/**
+ * Makes access decisions for Games and the things owned by games.
+ */
 class GameVoter extends Voter
 {
     // If someone can do game organizer functions
-    const ORGANIZE = 'organize';
+    const ORGANIZE = 'CAN_ORGANIZE';
 
     protected function supports($attribute, $subject)
     {
@@ -21,7 +25,7 @@ class GameVoter extends Voter
         }
 
         // We only vote on Games
-        if (!$subject instanceof Game) {
+        if (! (($subject instanceof Game) || $subject instanceof DowntimePeriod)) {
             return false;
         }
 
@@ -37,7 +41,13 @@ class GameVoter extends Voter
             return false;
         }
 
-        $game = $subject;
+        if ($subject instanceof DowntimePeriod) {
+            $game = $subject->getGame();
+        } else {
+            $game = $subject;
+        }
+
+        dump($subject);
 
         switch ($attribute) {
             case self::ORGANIZE:

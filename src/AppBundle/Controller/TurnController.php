@@ -34,10 +34,14 @@ class TurnController extends Controller
     /**
      * Creates a new turn entity.
      *
-     * @Route("/new", name="turn_new")
+     * @Route("/new/{downtimePeriod_id", name="turn_new")
+     * @Method({"GET", "POST"})
+     * 
+     * @ParamConverter("downtimePeriod", class="AppBundle:DowntimePeriod", options={"id" = "downtimePeriod_id"})
+     * @Security("has_role('ROLE_PLAYER')")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, DowntimePeriod $period)
     {
         $turn = new Turn();
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);

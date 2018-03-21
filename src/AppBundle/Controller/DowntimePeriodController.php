@@ -42,7 +42,7 @@ class DowntimePeriodController extends Controller
      *
      * @Route("/new/{game_id}", name="downtimeperiod_new")
      * @ParamConverter("game", class="AppBundle:Game", options={"id" = "game_id"})
-     * @Security("has_role('ROLE_ORGANIZER') and is_granted('organize', game)")
+     * @Security("has_role('ROLE_ORGANIZER') and is_granted('CAN_ORGANIZE', game)")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, Game $game)
@@ -88,6 +88,7 @@ class DowntimePeriodController extends Controller
      * Displays a form to edit an existing downtimePeriod entity.
      *
      * @Route("/{id}/edit", name="downtimeperiod_edit")
+     * @Security("has_role('ROLE_ORGANIZER') and is_granted('CAN_ORGANIZE', downtimePeriod)")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, DowntimePeriod $downtimePeriod)
@@ -113,6 +114,7 @@ class DowntimePeriodController extends Controller
      * Deletes a downtimePeriod entity.
      *
      * @Route("/{id}", name="downtimeperiod_delete")
+     * @Security("has_role('ROLE_ORGANIZER') and is_granted('CAN_ORGANIZE', downtimePeriod)") 
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, DowntimePeriod $downtimePeriod)
@@ -127,6 +129,21 @@ class DowntimePeriodController extends Controller
         }
 
         return $this->redirectToRoute('downtimeperiod_index');
+    }
+
+    /**
+     * Called via render to create Downtime periods attached to a game.
+     */
+    public function addTurnForm(DowntimePeriod $Period)
+    {
+        $downtimeperiod = new DowntimePeriod();
+        $downtimeperiod->setGame($game);
+        $downtimeperiod->setName("Downtime for " . date('F Y'));
+        $form = $this->createForm('AppBundle\Form\TurnType', $downtimeperiod);
+        return $this->render('downtimeperiod/_add.html.twig', [
+            'game' => $game,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

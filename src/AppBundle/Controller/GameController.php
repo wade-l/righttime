@@ -92,16 +92,13 @@ class GameController extends Controller
      *
      * @Route("/{id}/edit", name="game_edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or is_granted('CAN_ORGANIZE', game)")
      */
     public function editAction(Request $request, Game $game)
     {
         $deleteForm = $this->createDeleteForm($game);
         $editForm = $this->createForm('AppBundle\Form\GameType', $game);
         $editForm->handleRequest($request);
-
-        $somevar = "testEdit";
-        dump($somevar);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -121,7 +118,7 @@ class GameController extends Controller
      *
      * @Route("/{id}", name="game_delete")
      * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN') or is_granted('CAN_ORGANIZE', game)")
      */
     public function deleteAction(Request $request, Game $game)
     {

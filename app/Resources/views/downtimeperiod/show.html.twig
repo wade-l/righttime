@@ -32,6 +32,7 @@
         <li>
             <a href="{{ path('downtimeperiod_index') }}">Back to the list</a>
         </li>
+        {% if is_granted('CAN_ORGANIZE', downtimePeriod) %}
         <li>
             <a href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">Edit</a>
         </li>
@@ -40,5 +41,6 @@
                 <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
+        {% endif %}
     </ul>
 {% endblock %}
