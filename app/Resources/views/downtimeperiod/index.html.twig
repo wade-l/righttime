@@ -29,7 +29,7 @@
                         {% for character in characters %}
                             {% if character.game == downtimePeriod.game %}
                                 <li>
-                                    <a href="{{ path('turn_new', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Turn for {{ character.name }}</a>
+                                    <a href="{{ path('turn_edit', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Turn for {{ character.name }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

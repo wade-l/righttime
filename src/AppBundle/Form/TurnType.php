@@ -16,7 +16,7 @@ class TurnType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('comments')->add('character')->add('downtimePeriod')
+        $builder->add('comments')
             ->add('acts', CollectionType::class, array(
                 'entry_type' => ActType::class,
                 'entry_options' => array('label' => false),

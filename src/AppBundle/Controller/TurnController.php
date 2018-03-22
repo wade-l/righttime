@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Turn;
 use AppBundle\Entity\DowntimePeriod;
 use AppBundle\Entity\Character;
+use AppBundle\Entity\Act;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,17 +39,26 @@ class TurnController extends Controller
     }
 
     /**
-     * Creates a new turn entity.
+     * Edits or creates a turn entity.
      *
-     * @Route("/new/{downtime_id}/character/{character_id}", name="turn_new")
+     * @Route("/edit/{downtime_id}/character/{character_id}", name="turn_new")
      * @ParamConverter("period", class="AppBundle:DowntimePeriod", options={"id" = "downtime_id"})
      * @ParamConverter("character", class="AppBundle:Character", options={"id" = "character_id"})
      * 
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, DowntimePeriod $period, Character $character)
+    public function editAction(Request $request, DowntimePeriod $period, Character $character)
     {
-        $turn = new Turn();
+        $turn = $this->getDoctrine()
+            ->getRepository(Turn::class)
+            ->findByPeriodAndCharacter($period, $character);
+
+        if ( $turn == null) {
+            $turn = new Turn();
+            $turn->setDowntimePeriod($period);
+            $turn->setCharacter($character);
+        }
+        
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);
         $form->handleRequest($request);
 
@@ -60,7 +70,7 @@ class TurnController extends Controller
             return $this->redirectToRoute('turn_show', array('id' => $turn->getId()));
         }
 
-        return $this->render('turn/new.html.twig', array(
+        return $this->render('turn/edit.html.twig', array(
             'turn' => $turn,
             'form' => $form->createView(),
         ));
@@ -78,31 +88,6 @@ class TurnController extends Controller
 
         return $this->render('turn/show.html.twig', array(
             'turn' => $turn,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing turn entity.
-     *
-     * @Route("/{id}/edit", name="turn_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Turn $turn)
-    {
-        $deleteForm = $this->createDeleteForm($turn);
-        $editForm = $this->createForm('AppBundle\Form\TurnType', $turn);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('turn_edit', array('id' => $turn->getId()));
-        }
-
-        return $this->render('turn/edit.html.twig', array(
-            'turn' => $turn,
-            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

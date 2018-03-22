@@ -21,9 +21,10 @@ class TurnRepository extends \Doctrine\ORM\EntityRepository
             ->select('t')
             ->from('AppBundle:Turn','t')            
             ->where('t.downtimePeriod = :period')
-            ->where('t.characte = :character')
+            ->andWhere('t.character = :character')
             ->setParameter('character', $character)
+            ->setParameter('period', $period)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }
