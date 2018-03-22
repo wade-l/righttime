@@ -13,7 +13,7 @@ class ActType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('summary')->add('description')->add('turn');
+        $builder->add('summary')->add('description');
     }/**
      * {@inheritdoc}
      */

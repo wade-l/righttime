@@ -10,7 +10,7 @@
 
         <h3>Actions</h3>
         <ul class="acts" data-prototype="{{ form_widget(form.acts.vars.prototype)|e('html_attr') }}">
-            {% for acts in form.acts %}
+            {% for act in form.acts %}
                 <li>{{ form_row(act.summary) }}</li>
                 <li>{{ form_row(act.description) }}</li>
             {% endfor %}

@@ -36,7 +36,7 @@ class Turn
     /**
      * @var bool
      *
-     * @ORM\Column(name="finalized", type="boolean")
+     * @ORM\Column(name="finalized", type="boolean", nullable=true)
      */
     private $finalized;
 
@@ -48,13 +48,14 @@ class Turn
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Act", mappedBy="turn")
+     * @ORM\OneToMany(targetEntity="Act", mappedBy="turn", cascade={"persist"})
      */
     private $acts;
 
     public function __construct()
     {
         $this->acts = new ArrayCollection();
+        $finalized = false;
     }
 
     /**
@@ -181,6 +182,32 @@ class Turn
         $this->acts = $acts;
 
         return $this;
+    }
+
+    /**
+     * Adder method to add in acts
+     */
+    public function addAct(Act $act)
+    {
+        $act->setTurn($this);
+        $this->acts->add($act);
+    }
+
+    /**
+     * Remover method to remove acts
+     */
+    public function removeAct(Act $act)
+    {
+        $this->acts->removeElement($act);
+    }
+
+
+    /**
+     * String representation of a turn
+     */
+    public function __toString()
+    {
+        return $this->getCharacter()->getName() . 'for' . $this->getDowntimePeriod()->getName();
     }
 }
 

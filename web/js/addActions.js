@@ -15,6 +15,11 @@ jQuery(document).ready(function() {
     // add the "add an action" anchor and li to the actions ul
     $collectionHolder.append($newLinkLi);
 
+    // add a delete link to all of the existing action form li elements
+    $collectionHolder.find('li').each(function() {
+        addActFormDeleteLink($(this));
+    })
+
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
@@ -51,4 +56,18 @@ function addActForm($collectionHolder, $newLinkLi) {
     // Display the form in the page in an li, before the "Add a tag" link li
     var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
+
+}
+
+function addActFormDeleteLink($actFormLi) {
+    var $removeFormA = $('<a href="#">delete this action</a>');
+    $actFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the li for the act form
+        $actFormLi.remove();
+    });
 }
