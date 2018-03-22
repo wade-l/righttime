@@ -57,6 +57,7 @@ class TurnController extends Controller
             $turn = new Turn();
             $turn->setDowntimePeriod($period);
             $turn->setCharacter($character);
+            //TODO: Set up default actions.
         }
         
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);
