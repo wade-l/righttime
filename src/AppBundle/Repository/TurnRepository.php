@@ -2,6 +2,10 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\DowntimePeriod;
+use AppBundle\Entity\Character;
+
+
 /**
  * TurnRepository
  *
@@ -10,4 +14,16 @@ namespace AppBundle\Repository;
  */
 class TurnRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByPeriodAndCharacter(DowntimePeriod $period, Character $character) {
+        return $this->getEntityManager()
+            ->createQueryBuilder('t')
+            ->select('t')
+            ->from('AppBundle:Turn','t')            
+            ->where('t.downtimePeriod = :period')
+            ->where('t.characte = :character')
+            ->setParameter('character', $character)
+            ->getQuery()
+            ->getResult();
+    }
 }

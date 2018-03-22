@@ -25,13 +25,15 @@
                 <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ downtimePeriod.game.name }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('turn_new', { 'downtime_id': downtimePeriod.id }) }}">create turn</a>
-                        </li>
+                    <ul>                     
+                        {% for character in characters %}
+                            {% if character.game == downtimePeriod.game %}
+                                <li>
+                                    <a href="{{ path('turn_new', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Turn for {{ character.name }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
                         {% if is_granted('CAN_ORGANIZE', downtimePeriod) %}
                         <li>
                             <a href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">edit</a>

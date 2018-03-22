@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Turn;
 use AppBundle\Entity\DowntimePeriod;
+use AppBundle\Entity\Character;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -39,12 +40,13 @@ class TurnController extends Controller
     /**
      * Creates a new turn entity.
      *
-     * @Route("/new/{downtime_id}", name="turn_new")
+     * @Route("/new/{downtime_id}/character/{character_id}", name="turn_new")
      * @ParamConverter("period", class="AppBundle:DowntimePeriod", options={"id" = "downtime_id"})
+     * @ParamConverter("character", class="AppBundle:Character", options={"id" = "character_id"})
      * 
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, DowntimePeriod $period)
+    public function newAction(Request $request, DowntimePeriod $period, Character $character)
     {
         $turn = new Turn();
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);
