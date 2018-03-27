@@ -25,7 +25,7 @@
             <a href="{{ path('turn_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('turn_edit', { 'id': turn.id }) }}">Edit</a>
+            <a href="{{ path('turn_edit', { 'downtime_id': turn.downtimePeriod.id, 'character_id': turn.character.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

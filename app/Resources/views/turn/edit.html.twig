@@ -11,6 +11,7 @@
             {% for act in form.acts %}
                 <li>{{ form_row(act.summary) }}</li>
                 <li>{{ form_row(act.description) }}</li>
+                <li class="delete_act"></li>
             {% endfor %}
         </ul>
 
@@ -21,7 +22,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('turn_index') }}">Back to the list</a>
+            <a href="{{ path('downtimeperiod_index') }}">Back to the list</a>
         </li>
     </ul>
 {% endblock %}
