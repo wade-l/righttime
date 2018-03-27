@@ -41,7 +41,7 @@ class TurnController extends Controller
     /**
      * Edits or creates a turn entity.
      *
-     * @Route("/edit/{downtime_id}/character/{character_id}", name="turn_new")
+     * @Route("/edit/{downtime_id}/character/{character_id}", name="turn_edit")
      * @ParamConverter("period", class="AppBundle:DowntimePeriod", options={"id" = "downtime_id"})
      * @ParamConverter("character", class="AppBundle:Character", options={"id" = "character_id"})
      * 
@@ -49,6 +49,9 @@ class TurnController extends Controller
      */
     public function editAction(Request $request, DowntimePeriod $period, Character $character)
     {
+        $DEFAULT_ACTIONS = array("First Regular Downtime Action", "Second Regular Downtime Action", "Third Regular Downtime Action");
+
+
         $turn = $this->getDoctrine()
             ->getRepository(Turn::class)
             ->findByPeriodAndCharacter($period, $character);
@@ -57,7 +60,11 @@ class TurnController extends Controller
             $turn = new Turn();
             $turn->setDowntimePeriod($period);
             $turn->setCharacter($character);
-            //TODO: Set up default actions.
+            foreach ($DEFAULT_ACTIONS as $actionSummary) {
+                $act = new Act();
+                $act->setSummary($actionSummary);
+                $turn->addAct($act);
+            }
         }
         
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);

@@ -19,6 +19,7 @@ jQuery(document).ready(function() {
     $collectionHolder.find('li').each(function() {
         addActFormDeleteLink($(this));
     })
+    
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
