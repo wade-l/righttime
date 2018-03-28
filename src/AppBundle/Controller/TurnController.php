@@ -6,6 +6,7 @@ use AppBundle\Entity\Turn;
 use AppBundle\Entity\DowntimePeriod;
 use AppBundle\Entity\Character;
 use AppBundle\Entity\Act;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -51,7 +52,6 @@ class TurnController extends Controller
     {
         $DEFAULT_ACTIONS = array("First Regular Downtime Action", "Second Regular Downtime Action", "Third Regular Downtime Action");
 
-
         $turn = $this->getDoctrine()
             ->getRepository(Turn::class)
             ->findByPeriodAndCharacter($period, $character);
@@ -66,12 +66,28 @@ class TurnController extends Controller
                 $turn->addAct($act);
             }
         }
+
+        // Create an ArrayCollection of the original actions
+        $originalActs = new ArrayCollection();
+        foreach ($turn->getActs() as $act) {
+            $originalActs->add($act);
+        }
         
         $form = $this->createForm('AppBundle\Form\TurnType', $turn);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Remove the relationship between act and turn if necessary
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($originalActs as $act) {
+                if (false === $turn->getActs()->contains($act)) {
+                    // Remove the Act from the Turn
+                    $turn->removeAct($act);
+                    $em->remove($act);
+                }
+            }
+
             $em->persist($turn);
             $em->flush();
 

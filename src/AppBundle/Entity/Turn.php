@@ -199,6 +199,7 @@ class Turn
     public function removeAct(Act $act)
     {
         $this->acts->removeElement($act);
+        $act->setTurn(null);
     }
 
 

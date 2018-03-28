@@ -12,7 +12,7 @@ jQuery(document).ready(function() {
     $collectionHolder = $('ul.acts');
 
     // add a delete link to all of the existing action form li elements
-    $collectionHolder.find('li.delete_act').each(function() {
+    $collectionHolder.find('li').each(function() {
         addActFormDeleteLink($(this));
     })
 
