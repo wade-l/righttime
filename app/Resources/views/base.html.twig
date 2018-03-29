@@ -9,6 +9,7 @@
             <script src="https://use.fontawesome.com/560bba9b00.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
             <link rel="stylesheet" href="css/admin4b.min.css">
+            <link rel="stylesheet" href="css/righttime.css">
         {% endblock %}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -20,7 +21,22 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="navbar-header">
+                            <p class="navbar-text navbar-right">
+                                {% if app.user %}
+                                    Logged in as <a class="navbar-link" href="{{ path("fos_user_profile_show") }}">{{app.user.username}}</a>. <a class="btn btn-secondary navbar-btn" role="button" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+            </div>
+        </nav>
         <div class="app">
+
             <div class="app-body">
                 <div class="app-content">
                     <div class="container-fluid">

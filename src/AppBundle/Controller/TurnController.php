@@ -101,6 +101,25 @@ class TurnController extends Controller
     }
 
     /**
+     * Review an old turn
+     *
+     * @Route("/review/{downtime_id}/character/{character_id}", name="turn_review")
+     * @ParamConverter("period", class="AppBundle:DowntimePeriod", options={"id" = "downtime_id"})
+     * @ParamConverter("character", class="AppBundle:Character", options={"id" = "character_id"})
+     * 
+     * @Method({"GET"})
+     */
+    public function reviewAction(Request $request, DowntimePeriod $period, Character $character)
+    {
+        $turn = $this->getDoctrine()
+            ->getRepository(Turn::class)
+            ->findByPeriodAndCharacter($period, $character);
+
+        return $this->showAction($turn);
+    }
+
+
+    /**
      * Finds and displays a turn entity.
      *
      * @Route("/{id}", name="turn_show")

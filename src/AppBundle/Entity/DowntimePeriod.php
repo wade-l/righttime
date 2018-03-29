@@ -186,6 +186,22 @@ class DowntimePeriod
         return $this;
     }
 
+    /**
+     * Get pending/open/closed status
+     */ 
+    public function getStatus()
+    {
+        $now = new \DateTime();
+        if ( $now < $this->getOpen() ) {
+            return "Pending";
+        } else if ( ($now < $this->getClose()) || ( $this->getClose() == null) ) {
+            return "Open";
+        } else {
+            return "Closed";
+        }
+    }
+
+
     public function __toString() {
         return $this->name;
     }

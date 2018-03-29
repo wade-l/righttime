@@ -26,5 +26,8 @@
    <input class="btn btn-success" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
  
 </form>
+
+<div>Don't have an account? <a class="btn btn-secondary" role="button" href="{{ path('fos_user_registration_register') }}">Register!</a></div>
+<div>Forgot your password? <a class="btn btn-secondary" role="button" href="{{ path('fos_user_resetting_request') }}">Reset Password</a>
  
 {% endblock fos_user_content %}

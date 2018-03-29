@@ -24,6 +24,7 @@ class DowntimePeriodRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('g.characters', 'c')
             ->where('c.player = :player')
             ->setParameter('player', $player)
+            ->orderBy('d.close', 'DESC')
             ->getQuery()
             ->getResult();
     }

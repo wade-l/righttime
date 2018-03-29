@@ -1,36 +1,37 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Downtimeperiods list</h1>
+    <h1>Downtimes</h1>
 
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Open</th>
-                <th>Close</th>
                 <th>Game</th>
-                <th>Actions</th>
+                <th>Downtime</th>
+                <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for downtimePeriod in downtimePeriods %}
             <tr>
-                <td><a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">{{ downtimePeriod.id }}</a></td>
-                <td>{{ downtimePeriod.name }}</td>
-                <td>{{ downtimePeriod.description }}</td>
-                <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ downtimePeriod.game.name }}</td>
+                <td><a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">{{ downtimePeriod.name }}</a></td>
+                <td>{{downtimePeriod.status}}
+                {% if downtimePeriod.status == "Pending" %}
+                    until {% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}
+                {% elseif downtimePeriod.status == "Closed" %}
+                    on {% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}
+                {% endif %}
+                </td>
                 <td>
                     <ul>                     
                         {% for character in characters %}
                             {% if character.game == downtimePeriod.game %}
-                                <li>
-                                    <a href="{{ path('turn_edit', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Turn for {{ character.name }}</a>
-                                </li>
+                                <p>
+                                    {% if downtimePeriod.status == "Open" %}
+                                        <a class="btn btn-primary btn-sm btn-block" role="button" href="{{ path('turn_edit', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Edit {{ character.name }}'s Turn</a>
+                                    {% elseif downtimePeriod.status == "Closed" %}
+                                        <a class="btn btn-info btn-sm btn-block" role="button" href="{{ path('turn_review', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Review {{ character.name }}'s Turn</a>
+                                    {% endif %}
+                                </p>
                             {% endif %}
                         {% endfor %}
 
@@ -45,4 +46,3 @@
         {% endfor %}
         </tbody>
     </table>
-{% endblock %}
