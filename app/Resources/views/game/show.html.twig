@@ -40,17 +40,18 @@
             </tr>
         </tbody>
     </table>
-
+    {% if is_granted('CAN_ORGANIZE', game) %}
     <div id="game-add-downtimeperiod">
-        {% if is_granted('CAN_ORGANIZE', game) %}
+
             {{ render(controller('AppBundle\\Controller\\GameController:addDowntimePeriodForm', {'id': game.id})) }}
-        {% endif %}
+    {% endif %}
     </div>
 
     <ul>
         <li>
             <a href="{{ path('game_index') }}">Back to the list</a>
         </li>
+        {% if is_granted('CAN_ORGANIZE', game) %}
         <li>
             <a href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>
         </li>
@@ -59,6 +60,7 @@
                 <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
+        {% endif %}
         <li>
             {{ form_start(join_form) }}
                 <input type="submit" value="Join">
