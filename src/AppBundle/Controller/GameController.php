@@ -158,14 +158,14 @@ class GameController extends Controller
             $member = new Member();
             $member->setUser($user);
             $member->setGame($game);
-            $member->setPosition("Player");
+            $member->setPosition("player");
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($member);
             $em->flush();
 
         }
-        return $this->redirectToRoute('game_index');
+        return $this->redirectToRoute('homepage');
     }
 
     /**

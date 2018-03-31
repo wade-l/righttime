@@ -6,12 +6,23 @@
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ turn.id }}</td>
+                <th>Character</th>
+                <td>{{ turn.character}}</td>
             </tr>
             <tr>
-                <th>Finalized</th>
-                <td>{% if turn.finalized %}Yes{% else %}No{% endif %}</td>
+                <th>Game</th>
+                <td>{{ turn.downtimePeriod.game }}</td>
+            </tr>
+            <tr>
+                <th>Actions</th>
+                <td>            
+                    {% for act in turn.acts %}
+                    <li>
+                        <p><h4>{{ act.summary }}</h4></p>
+                        <p>{{ act.description }}</p>
+                    </li>
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <th>Comments</th>
@@ -22,15 +33,18 @@
 
     <ul>
         <li>
-            <a href="{{ path('turn_index') }}">Back to the list</a>
+            <a class="btn btn-primary" href="{{ path('homepage') }}">Back to the list</a>
         </li>
-        <li>
-            <a href="{{ path('turn_edit', { 'downtime_id': turn.downtimePeriod.id, 'character_id': turn.character.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
+        {% if turn.downtimePeriod.status == "Open" %}
+            <li>
+                <a class="btn btn-primary" href="{{ path('turn_edit', { 'downtime_id': turn.downtimePeriod.id, 'character_id': turn.character.id }) }}">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                    <input type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        {% endif %}
+
     </ul>
 {% endblock %}

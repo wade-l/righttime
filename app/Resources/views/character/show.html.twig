@@ -25,16 +25,22 @@
     </table>
 
     <ul>
-        <li>
-            <a href="{{ path('character_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('character_edit', { 'id': character.id }) }}">Edit</a>
-        </li>
-        <li>
+
+        {% if is_granted('CAN_EDIT', character) %}
+            <li>
+                <a class="btn btn-primary" href="{{ path('character_edit', { 'id': character.id }) }}">Edit</a>
+            </li>
+            <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input class="btn btn-primary" type="submit" value="Delete">
             {{ form_end(delete_form) }}
+            </li>
+        {% endif %}
+        <li>
+            <a href="{{ path('character_index') }}">Back to the character list</a>
+        </li>
+        <li>
+            <a href="{{ path('homepage') }}">Back to the homepage</a>
         </li>
     </ul>
 {% endblock %}

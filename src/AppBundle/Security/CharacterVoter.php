@@ -5,28 +5,31 @@ namespace AppBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use AppBundle\Entity\Game;
-use AppBundle\Entity\DowntimePeriod;
+use AppBundle\Entity\Character;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Member;
 
 /**
- * Makes access decisions for Games and the things owned by games.
+ * Makes access decisions for Characters
  */
-class GameVoter extends Voter
+class CharacterVoter extends Voter
 {
-    // If someone can do game organizer functions
+    // If someone owns the character
+    const OWN = 'IS_OWNER';
+    // If someone has organiational authority over the character
     const ORGANIZE = 'CAN_ORGANIZE';
-    const PLAY = 'CAN_PLAY';
+    //If someone can edit the character
+    const EDIT = 'CAN_EDIT';
 
     protected function supports($attribute, $subject)
     {
         // Check that we support the attribute
-        if (!in_array($attribute, array(self::ORGANIZE, self::PLAY))) {
+        if (!in_array($attribute, array(self::OWN, self::ORGANIZE, self::EDIT))) {
             return false;
         }
 
         // We only vote on Games
-        if (! (($subject instanceof Game) || $subject instanceof DowntimePeriod)) {
+        if (! $subject instanceof Character) {
             return false;
         }
 
@@ -42,24 +45,26 @@ class GameVoter extends Voter
             return false;
         }
 
-        if ($subject instanceof DowntimePeriod) {
-            $game = $subject->getGame();
-        } else {
-            $game = $subject;
-        }
-
         switch ($attribute) {
             case self::ORGANIZE:
-                return $this->canOrganize($game, $user);
-            case self::PLAY:
-                return $this->canPlay($game, $user);
+                return $this->canOrganize($subject, $user);
+            case self::OWN:
+                return $this->canPlay($subject, $user);
+            case self::EDIT:
+                return $this->canEdit($subject, $user);
         }
     }
 
-    private function canOrganize(Game $game, User $user) {
+    private function canEdit(Character $character, User $user) {
+        return ( $this->canOrganize($character, $user) || $this->canOwn($character, $user) );
+    }
+
+    private function canOrganize(Character $character, User $user) {
         $user_memberships = $user->getMembers();
 
-        foreach ($user_memberships->getIterator() as $iterator => $member) {
+        $game = $character->getGame();
+
+        foreach ( $user_memberships->getIterator() as $iterator => $member ) {
             if ( ( $member->getGame() == $game ) && ($member->getPosition () == 'organizer') ) {
                 return true;
             }
@@ -68,13 +73,9 @@ class GameVoter extends Voter
         return false;
     }
 
-    private function canPlay(Game $game, User $user) {
-        $user_memberships = $user->getMembers();
-
-        foreach ($user_memberships->getIterator() as $iterator => $member) {
-            if ( ( $member->getGame() == $game ) && ($member->getPosition () == 'player') ) {
-                return true;
-            }
+    private function canOwn(Character $character, User $user) {
+        if  ( $character->getPlayer() == $user ) {
+            return true;
         }
 
         return false;

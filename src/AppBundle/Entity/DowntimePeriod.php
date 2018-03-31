@@ -205,5 +205,25 @@ class DowntimePeriod
     public function __toString() {
         return $this->name;
     }
+
+    /**
+     * Get the value of turns
+     */ 
+    public function getTurns()
+    {
+        return $this->turns;
+    }
+
+    /**
+     * Set the value of turns
+     *
+     * @return  self
+     */ 
+    public function setTurns($turns)
+    {
+        $this->turns = $turns;
+
+        return $this;
+    }
 }
 

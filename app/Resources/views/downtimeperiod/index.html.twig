@@ -1,6 +1,6 @@
     <h1>Downtimes</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Game</th>
@@ -29,7 +29,11 @@
                                     {% if downtimePeriod.status == "Open" %}
                                         <a class="btn btn-primary btn-sm btn-block" role="button" href="{{ path('turn_edit', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Edit {{ character.name }}'s Turn</a>
                                     {% elseif downtimePeriod.status == "Closed" %}
-                                        <a class="btn btn-info btn-sm btn-block" role="button" href="{{ path('turn_review', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Review {{ character.name }}'s Turn</a>
+                                        {% for turn in downtimePeriod.turns %}
+                                            {% if turn.character == character %}
+                                                <a class="btn btn-info btn-sm btn-block" role="button" href="{{ path('turn_review', { 'downtime_id': downtimePeriod.id, 'character_id': character.id }) }}">Review {{ character.name }}'s Turn</a>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endif %}
                                 </p>
                             {% endif %}

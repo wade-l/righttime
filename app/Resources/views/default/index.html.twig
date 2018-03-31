@@ -1,31 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>The</span>Righttime<span>To do your Downtime</span></h1>
-            </div>
-            {% if user.members.empty %}
-                <div id="no_games">
-                    <p>You haven't joined any games. Visit the games page to browse and join the game you signed up to do downtime for!</p>
-                    <a class="btn btn-primary" role="button" href="{{ path('game_index') }}">Browse Games</a></div>
-                </div>
-            {% elseif user.characters.empty %}
-                <div id="no characters">
-                    <p>You don't have any characters. Create a character to start doing downtime!</p>
-                    <a class="btn btn-primary" role="button" href="{{ path('character_new') }}">Create Character</a></div>
-                </div>
-            {% else %}
-                <div id="downtime_index">
-                    Downtimes:
-                    {{ render(controller(
-                        'AppBundle:DowntimePeriod:index', {rquest: app.request}
-                    ))}}
-                </div>
-            {% endif %}
-        </div>
+
+    <div id="welcome">
+        <h1><span>The</span>Righttime<span>To do your Downtime</span></h1>
     </div>
+    {% if user.members.empty %}
+        <div id="no_games">
+            <p>You haven't joined any games. Visit the games page to browse and join the game you signed up to do downtime for!</p>
+            <a class="btn btn-primary" role="button" href="{{ path('game_index') }}">Browse Games</a></div>
+        </div>
+    {% elseif user.characters.empty %}
+        <div id="no characters">
+            <p>You don't have any characters. Create a character to start doing downtime!</p>
+            <a class="btn btn-primary" role="button" href="{{ path('character_new') }}">Create Character</a></div>
+        </div>
+    {% else %}
+        <div id="downtime_index">
+            {{ render(controller(
+                'AppBundle:DowntimePeriod:index', {rquest: app.request}
+            ))}}
+        </div>
+    {% endif %}
 {% endblock %}
 
 

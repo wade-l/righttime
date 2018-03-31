@@ -6,6 +6,7 @@ use AppBundle\Entity\Character;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,8 +25,15 @@ class CharacterController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $sac = $this->get('security.authorization_checker');
 
-        $characters = $em->getRepository('AppBundle:Character')->findAll();
+        if ( $sac->isGranted('ROLE_ADMIN') ) {
+            $characters = $em->getRepository('AppBundle:Character')->findAll();
+        } else {
+            $characters = $this->getUser()->getCharacters();
+        }
+
+
 
         return $this->render('character/index.html.twig', array(
             'characters' => $characters,
@@ -49,7 +57,6 @@ class CharacterController extends Controller
                     ->getManager()
                     ->getRepository('AppBundle:Game')
                     ->findAllByUser($player);
-            dump($games);
         }     
 
         $form = $this->createForm('AppBundle\Form\CharacterType', $character, array(
@@ -75,6 +82,7 @@ class CharacterController extends Controller
      * Finds and displays a character entity.
      *
      * @Route("/{id}", name="character_show")
+     * @Security("is_granted('CAN_EDIT', character)")
      * @Method("GET")
      */
     public function showAction(Character $character)
@@ -91,6 +99,7 @@ class CharacterController extends Controller
      * Displays a form to edit an existing character entity.
      *
      * @Route("/{id}/edit", name="character_edit")
+     * @Security("is_granted('CAN_EDIT', character)")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Character $character)
@@ -116,6 +125,7 @@ class CharacterController extends Controller
      * Deletes a character entity.
      *
      * @Route("/{id}", name="character_delete")
+     * @Security("is_granted('CAN_EDIT', character)")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Character $character)
