@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}    
+    <h1>Downtimes for {{ game.name }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Downtime</th>
+                <th>Status</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for downtimePeriod in downtimePeriods %}
+            <tr>
+                <td>
+                    <a href="{{ path('downtimeperiod_show', { 'id': downtimePeriod.id }) }}">{{ downtimePeriod.name }}</a>
+                </td>
+                <td>
+                    {{downtimePeriod.status}}
+                </td>
+                <td>
+                    {% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}
+                </td>
+                <td>
+                    {% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}
+                </td>
+
+                <td>
+                    <ul>                     
+                        {% if is_granted('CAN_ORGANIZE', downtimePeriod) %}
+                        <p>
+                            <a class="btn btn-primary" href="{{ path('downtimeperiod_viewturns', { 'id': downtimePeriod.id }) }}">View Turns</a>
+                        </p>
+                        <p>
+                            <a class="btn btn-primary" href="{{ path('downtimeperiod_edit', { 'id': downtimePeriod.id }) }}">Edit</a>
+                        </p>
+
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <ul>
+        <li>
+            <a href="{{ path('downtimeperiod_new', {'game_id': game.id}) }}">Create a new downtime period</a>
+        </li>
+    </ul>
+{% endblock %}

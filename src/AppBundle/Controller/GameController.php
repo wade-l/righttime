@@ -88,6 +88,21 @@ class GameController extends Controller
     }
 
     /**
+     * Shows org functionality for a game entity.
+     *
+     * @Route("/{id}/organize", name="game_organize")
+     * @Method("GET")
+     * @Security("is_granted('CAN_ORGANIZE', game)")
+     */
+    public function organizeAction(Game $game)
+    {
+
+        return $this->render('game/organize.html.twig', array(
+            'game' => $game,
+        ));
+    }
+    
+    /**
      * Displays a form to edit an existing game entity.
      *
      * @Route("/{id}/edit", name="game_edit")

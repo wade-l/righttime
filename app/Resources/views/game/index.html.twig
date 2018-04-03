@@ -24,9 +24,14 @@
                         <p>
                             <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}">View & Join</a>
                         <p>
-                            {% if is_granted('CAN_ORGANIZE', game) %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <p>
                                     <a class="btn btn-primary" href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>
+                                </p>
+                            {% endif %}
+                            {% if is_granted('CAN_ORGANIZE', game) %}
+                                <p>
+                                    <a class="btn btn-primary" href="{{ path('game_organize', { 'id': game.id }) }}">Organizer</a>
                                 </p>
                             {% endif %}
                     </td>

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+     <h1>Game: {{ game.description }}</h1>
+    <p>(<a href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>)</p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Description</th>
+                <td>{{ game.description }}</td>
+            </tr>
+            <tr>
+                <th>System</th>
+                <td>{{ game.system }}</td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <ul>
+                        {% for member in game.members %}
+                        <li>
+                            {{ member.user.username}} ( {{member.position}} )                            
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Characters</th>
+                <td>
+                    <ul>
+                        {% for character in game.characters %}
+                        <li>
+                            <a href="{{ path('character_show', { 'id': character.id} ) }}">{{ character.name}}</a>
+                             ( {{character.player.username}} )                            
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('downtimeperiod_organize', { 'id': game.id }) }}">Manage Downtimes</a>
+        </li>    
+        <li>
+            <a href="{{ path('homepage') }}">Back to the homepage</a>
+        </li>
+    </ul>
+{% endblock %}

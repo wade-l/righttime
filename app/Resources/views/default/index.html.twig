@@ -22,6 +22,27 @@
             ))}}
         </div>
     {% endif %}
+    {% if not games_organized is empty %}
+        <h2>Games organized:</h2>
+        <div id="games_organized">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for game in games_organized %}
+                <tr>
+                    <td>{{ game.name }}</td>
+                    <td><a class="btn btn-primary btn-sm btn-block" href="{{ path('game_organize', { 'id': game.id }) }}">Organize Game</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>    
+        </div>
+    {% endif %}
 {% endblock %}
 
 

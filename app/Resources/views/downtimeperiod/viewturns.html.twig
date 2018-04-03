@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Downtime Turns for {{ downtimePeriod.name }} in {{ downtimePeriod.game.name }}</h1>
+    <h2>Downtime period is currently {{ downtimePeriod.status }}.</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ downtimePeriod.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ downtimePeriod.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ downtimePeriod.description }}</td>
+            </tr>
+            <tr>
+                <th>Open</th>
+                <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Close</th>
+                <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <tbody>
+        <tr>
+                <th colspan="2">Turns</td>
+        </tr>
+        {% for turn in downtimePeriod.turns %}
+            <tr>
+                <th>Character</th>
+                <td>{{turn.character.name}} ({{turn.character.player.username}})</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <table class="table table-sm">
+                    <tbody>
+                        {% for action in turn.acts %}
+                        <tr>
+                            <th>Action</th>
+                            <td>{{action.summary}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{action.description}}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if turn.comments %}
+                        <tr>
+                            <th>Comments</th>
+                            <td>{{turn.comments}}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                    </table>                    
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('downtimeperiod_organize', {'id': downtimePeriod.game.id}) }}">Back to organizing downtime periods</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Game</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -40,12 +40,6 @@
             </tr>
         </tbody>
     </table>
-    {% if is_granted('CAN_ORGANIZE', game) %}
-    <div id="game-add-downtimeperiod">
-
-            {{ render(controller('AppBundle\\Controller\\GameController:addDowntimePeriodForm', {'id': game.id})) }}
-    {% endif %}
-    </div>
 
     <ul>
         <li>

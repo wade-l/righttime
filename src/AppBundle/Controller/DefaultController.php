@@ -13,9 +13,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+
+        $games_organized = $this->getDoctrine()->getManager()->getRepository('AppBundle:Game')->findAllByUserAndPosition($this->getUser(), 'organizer');
+        
         return $this->render('default/index.html.twig', array(
             'user'=> $this->getUser(),
+            'games_organized'=> $games_organized,
         ));
     }
 }

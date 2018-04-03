@@ -19,6 +19,8 @@
                     until {% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}
                 {% elseif downtimePeriod.status == "Closed" %}
                     on {% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}
+                {% elseif downtimePeriod.close %}
+                    until {{ downtimePeriod.close|date('Y-m-d') }}
                 {% endif %}
                 </td>
                 <td>

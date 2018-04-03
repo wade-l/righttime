@@ -40,11 +40,31 @@ class DowntimePeriodController extends Controller
     }
 
     /**
+     * Shows organization options for a given game
+     *
+     * @Route("/organize/{id}", name="downtimeperiod_organize")
+     * @Security("is_granted('CAN_ORGANIZE', game)")
+     * @Method("GET")
+     */
+    public function organizeAction(Game $game)
+    {
+        //TODO
+        $em = $this->getDoctrine()->getManager();
+
+        $downtimePeriods = $em->getRepository('AppBundle:DowntimePeriod')->findByGame($game);
+
+        return $this->render('downtimeperiod/organize.html.twig', array(
+            'game' => $game,
+            'downtimePeriods' => $downtimePeriods,
+        ));
+    }
+
+    /**
      * Creates a new downtimePeriod entity.
      *
      * @Route("/new/{game_id}", name="downtimeperiod_new")
      * @ParamConverter("game", class="AppBundle:Game", options={"id" = "game_id"})
-     * @Security("has_role('ROLE_ORGANIZER') and is_granted('CAN_ORGANIZE', game)")
+     * @Security("is_granted('CAN_ORGANIZE', game)")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request, Game $game)
@@ -71,6 +91,20 @@ class DowntimePeriodController extends Controller
     }
 
     /**
+     * Views all turns associated with a downtime period
+     *
+     * @Route("/viewturns/{id}", name="downtimeperiod_viewturns")
+     * @Method("GET")
+     * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
+     */
+    public function viewturnsAction(DowntimePeriod $downtimePeriod)
+    {
+        return $this->render('downtimeperiod/viewturns.html.twig', array(
+            'downtimePeriod' => $downtimePeriod,
+        ));
+    }
+
+    /**
      * Finds and displays a downtimePeriod entity.
      *
      * @Route("/{id}", name="downtimeperiod_show")
@@ -90,7 +124,7 @@ class DowntimePeriodController extends Controller
      * Displays a form to edit an existing downtimePeriod entity.
      *
      * @Route("/{id}/edit", name="downtimeperiod_edit")
-     * @Security("has_role('ROLE_ORGANIZER') and is_granted('CAN_ORGANIZE', downtimePeriod)")
+     * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, DowntimePeriod $downtimePeriod)
