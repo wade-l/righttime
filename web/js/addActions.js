@@ -4,7 +4,7 @@
 var $collectionHolder;
 
 // setup an "add an action" link
-var $addActLink = $('<a class="btn btn-primary" href="#" class="add_act_link">Add an action</a>');
+var $addActLink = $('<p><a class="btn btn-success btn-block" href="#" class="add_act_link">Add an action</a></p>');
 var $newLinkLi = $('<li></li>').append($addActLink);
 
 jQuery(document).ready(function() {
@@ -60,7 +60,7 @@ function addActForm($collectionHolder, $newLinkLi) {
 }
 
 function addActFormDeleteLink($actFormLi) {
-    var $removeFormA = $('<a class="btn btn-primary"  href="#">delete this action</a>');
+    var $removeFormA = $('<p><a class="btn btn-warning btn-block"  href="#">delete this action</a></p>');
     $actFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

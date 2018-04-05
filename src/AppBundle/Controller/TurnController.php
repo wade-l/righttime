@@ -50,7 +50,7 @@ class TurnController extends Controller
      */
     public function editAction(Request $request, DowntimePeriod $period, Character $character)
     {
-        $DEFAULT_ACTIONS = array("First Regular Downtime Action", "Second Regular Downtime Action", "Third Regular Downtime Action");
+        $DEFAULT_ACTIONS = 3;
 
         $turn = $this->getDoctrine()
             ->getRepository(Turn::class)
@@ -60,9 +60,8 @@ class TurnController extends Controller
             $turn = new Turn();
             $turn->setDowntimePeriod($period);
             $turn->setCharacter($character);
-            foreach ($DEFAULT_ACTIONS as $actionSummary) {
+            for ($i = 0; $i < $DEFAULT_ACTIONS; $i++) {
                 $act = new Act();
-                $act->setSummary($actionSummary);
                 $turn->addAct($act);
             }
         }
