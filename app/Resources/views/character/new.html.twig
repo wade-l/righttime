@@ -2,15 +2,15 @@
 
 {% block body %}
     <h1>Character creation</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
+    <div class="container col-lg-6">
+        <p>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input class="button btn-primary btn-block" type="submit" value="Create" />
+        {{ form_end(form) }}
+        </p>
+        <p>
             <a href="{{ path('character_index') }}">Back to the list</a>
-        </li>
-    </ul>
+        </p>
+    </div>
 {% endblock %}

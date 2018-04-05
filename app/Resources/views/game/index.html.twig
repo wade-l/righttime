@@ -24,7 +24,10 @@
                     <td>{{ game.system }}</td>
                     <td>
                         <p>
-                            <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}">View & Join</a>
+                            <a class="btn btn-primary" href="{{ path('game_show', { 'id': game.id }) }}">View
+                            {% if not app.user.isMember(game) %}
+                            & Join
+                            {% endif %}</a>
                         <p>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <p>
