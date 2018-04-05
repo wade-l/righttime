@@ -1,31 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% block nav_characters %}active{% endblock %}
+
 {% block body %}
     <h1>Characters list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
-                <th>Actions</th>
+                <th>Player</th>
+                <th>Game</th>
             </tr>
         </thead>
         <tbody>
         {% for character in characters %}
             <tr>
-                <td><a href="{{ path('character_show', { 'id': character.id }) }}">{{ character.id }}</a></td>
-                <td>{{ character.name }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('character_show', { 'id': character.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('character_edit', { 'id': character.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('character_show', { 'id': character.id }) }}">{{ character.name }}</a></td>
+                <td>{{ character.player.username }}</td>
+                <td>{{ character.game.name }}</td>
             </tr>
         {% endfor %}
         </tbody>
