@@ -83,4 +83,18 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * Checks if the user is in a game
+     */ 
+    public function isMember($game)
+    {
+        foreach ($this->members->getIterator() as $memberIterator => $member) {
+            if ($member->getGame() == $game) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -55,10 +55,12 @@
             {{ form_end(delete_form) }}
         </li>
         {% endif %}
+        {% if not app.user.isMember(game) %}
         <li>
             {{ form_start(join_form) }}
                 <input type="submit" value="Join">
             {{ form_end(join_form) }}
         </li>
+        {% endif %}
     </ul>
 {% endblock %}
