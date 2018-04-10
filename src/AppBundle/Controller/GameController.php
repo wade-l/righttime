@@ -80,8 +80,22 @@ class GameController extends Controller
         $deleteForm = $this->createDeleteForm($game);
         $joinForm = $this->createJoinForm($game);
 
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Member');
+
+        $organizers = $rep->findBy(array(
+            'game' => $game,
+            'position' => 'organizer',
+
+        ));
+        $players = $rep->findBy(array(
+            'game' => $game,
+            'position' => 'player',
+        ));
+
         return $this->render('game/show.html.twig', array(
             'game' => $game,
+            'organizers' => $organizers,
+            'players' => $players,
             'delete_form' => $deleteForm->createView(),
             'join_form' => $joinForm->createView(),
         ));

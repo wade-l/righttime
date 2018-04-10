@@ -22,20 +22,27 @@
                 <td>{{ game.system }}</td>
             </tr>
             <tr>
-                <th>Members</th>
+                <th>Organizers</th>
                 <td>
-                    <table>
-                        {% for member in game.members %}
-                        <tr>
-                            <td>
-                                {{ member.user.username}}
-                            </td>
-                            <td>
-                                ( {{member.position}} )
-                            </td>
-                        </td>
+                    <ul>
+                        {% for organizer in organizers %}
+                        <li>
+                            {{ organizer.user.username}}
+                        </li>
                         {% endfor %}
-                    </table>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Players</th>
+                <td>
+                    <ul>
+                        {% for player in players %}
+                        <li>
+                            {{ player.user.username}}
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </td>
             </tr>
         </tbody>
