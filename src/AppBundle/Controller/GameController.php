@@ -111,8 +111,22 @@ class GameController extends Controller
     public function organizeAction(Game $game)
     {
 
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Member');
+
+        $organizers = $rep->findBy(array(
+            'game' => $game,
+            'position' => 'organizer',
+
+        ));
+        $players = $rep->findBy(array(
+            'game' => $game,
+            'position' => 'player',
+        ));
+
         return $this->render('game/organize.html.twig', array(
             'game' => $game,
+            'organizers' => $organizers,
+            'players' => $players,
         ));
     }
     

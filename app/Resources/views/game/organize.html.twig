@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-     <h1>Game: {{ game.description }}</h1>
+     <h1>Game: {{ game.name }}</h1>
     <p>(<a href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>)</p>
     <table class="table">
         <tbody>
@@ -14,12 +14,24 @@
                 <td>{{ game.system }}</td>
             </tr>
             <tr>
-                <th>Members</th>
+                <th>Organizers</th>
                 <td>
                     <ul>
-                        {% for member in game.members %}
+                        {% for organizer in organizers %}
                         <li>
-                            {{ member.user.username}} ( {{member.position}} )                            
+                            {{ organizer.user.username}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Players</th>
+                <td>
+                    <ul>
+                        {% for player in players %}
+                        <li>
+                            {{ player.user.username}}
                         </li>
                         {% endfor %}
                     </ul>
