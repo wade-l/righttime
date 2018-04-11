@@ -99,9 +99,39 @@ class DowntimePeriodController extends Controller
      */
     public function viewturnsAction(DowntimePeriod $downtimePeriod)
     {
-        return $this->render('downtimeperiod/viewturns.html.twig', array(
-            'downtimePeriod' => $downtimePeriod,
-        ));
+        switch ($format) {
+            case "excel":
+                return $this->render('downtimeperiod/viewturns.xlsx.twig', array(
+                    'downtimePeriod' => $downtimePeriod,
+                ));
+                break;
+            default:
+                return $this->render('downtimeperiod/viewturns.html.twig', array(
+                    'downtimePeriod' => $downtimePeriod,
+                ));
+        }
+    }
+
+    /**
+     * Views all turns associated with a downtime period
+     *
+     * @Route("/viewturns/{id}/excel", name="downtimeperiod_viewturns")
+     * @Method("GET")
+     * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
+     */
+    public function viewturnsAction(DowntimePeriod $downtimePeriod, $format)
+    {
+        switch ($format) {
+            case "excel":
+                return $this->render('downtimeperiod/viewturns.xlsx.twig', array(
+                    'downtimePeriod' => $downtimePeriod,
+                ));
+                break;
+            default:
+                return $this->render('downtimeperiod/viewturns.html.twig', array(
+                    'downtimePeriod' => $downtimePeriod,
+                ));
+        }
     }
 
     /**
