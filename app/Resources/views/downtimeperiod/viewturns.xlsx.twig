@@ -1,4 +1,4 @@
-{% xlsdocument %}
+{% xlsdocument {format: 'xls'} %}
     {% xlssheet 'Sheet' %}
         {% xlsrow %}
             {% xlscell { style: { font: { size: '18'} } } %} {{downtimePeriod.name}}{% endxlscell %}

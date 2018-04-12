@@ -93,39 +93,20 @@ class DowntimePeriodController extends Controller
     /**
      * Views all turns associated with a downtime period
      *
-     * @Route("/viewturns/{id}", name="downtimeperiod_viewturns")
-     * @Method("GET")
-     * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
-     */
-    public function viewturnsAction(DowntimePeriod $downtimePeriod)
-    {
-        switch ($format) {
-            case "excel":
-                return $this->render('downtimeperiod/viewturns.xlsx.twig', array(
-                    'downtimePeriod' => $downtimePeriod,
-                ));
-                break;
-            default:
-                return $this->render('downtimeperiod/viewturns.html.twig', array(
-                    'downtimePeriod' => $downtimePeriod,
-                ));
-        }
-    }
-
-    /**
-     * Views all turns associated with a downtime period
-     *
-     * @Route("/viewturns/{id}/excel", name="downtimeperiod_viewturns")
+     * @Route("/viewturns/{id}/{format}", name="downtimeperiod_viewturns", defaults={"format"=".html"})
      * @Method("GET")
      * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
      */
     public function viewturnsAction(DowntimePeriod $downtimePeriod, $format)
     {
+        $format = substr($format, strpos($format, ".") +1);
         switch ($format) {
-            case "excel":
-                return $this->render('downtimeperiod/viewturns.xlsx.twig', array(
+            case "xlsx":
+                $response = $this->render('downtimeperiod/viewturns.xlsx.twig', array(
                     'downtimePeriod' => $downtimePeriod,
                 ));
+                $response->headers->set('Content-Type', 'application/vnd.ms-excel');
+                return $response;
                 break;
             default:
                 return $this->render('downtimeperiod/viewturns.html.twig', array(
