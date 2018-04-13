@@ -1,5 +1,6 @@
 {% xlsdocument {    format: 'xls',
                     title: 'Downtime Turns'} %}
+    {% autoescape false %}
     {% xlssheet 'Downtime Turns' %}
         {% xlsrow %}
             {% xlscell { style: { font: { size: '18'} } } %} {{downtimePeriod.name}}{% endxlscell %}
@@ -13,21 +14,22 @@
         {% for turn in downtimePeriod.turns %}
             {% for action in turn.acts %}
             {% xlsrow %}
-                {% xlscell %}{{turn.character.name}}{% endxlscell %}
-                {% xlscell %}{{turn.character.player.username}}{% endxlscell %}
-                {% xlscell %}{{action.summary}}{% endxlscell %}
-                {% xlscell %}{{action.description}}{% endxlscell %}
+                {% xlscell %}{{ turn.character.name }}{% endxlscell %}
+                {% xlscell %}{{ turn.character.player.username }}{% endxlscell %}
+                {% xlscell %}{{ action.summary }}{% endxlscell %}
+                {% xlscell %}{{ action.description }}{% endxlscell %}
             {% endxlsrow %}
             {% endfor %}
             {% if turn.comments %}
                     {% xlsrow %}
-                        {% xlscell %}{{turn.character.name}}{% endxlscell %}
-                        {% xlscell %}{{turn.character.player.username}}{% endxlscell %}
+                        {% xlscell %}{{ turn.character.name }}{% endxlscell %}
+                        {% xlscell %}{{ turn.character.player.username }}{% endxlscell %}
                         {% xlscell %}Comments:{% endxlscell %}
-                        {% xlscell %}{{turn.comments}}{% endxlscell %}
+                        {% xlscell %}{{ turn.comments }}{% endxlscell %}
                     {% endxlsrow %}
             {% endif %}
         {% endfor %}        
     {% endxlssheet %}
+    {% endautoescape %}
 
 {% endxlsdocument %}

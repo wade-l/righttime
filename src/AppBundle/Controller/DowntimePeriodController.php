@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Downtimeperiod controller.
@@ -93,18 +94,22 @@ class DowntimePeriodController extends Controller
     /**
      * Views all turns associated with a downtime period
      *
-     * @Route("/viewturns/{id}/{format}", name="downtimeperiod_viewturns", defaults={"format"=".html"})
+     * @Route("/viewturns/{id}/{format}", name="downtimeperiod_viewturns", defaults={"format"="html"})
      * @Method("GET")
      * @Security("is_granted('CAN_ORGANIZE', downtimePeriod)")
      */
     public function viewturnsAction(DowntimePeriod $downtimePeriod, $format)
     {
-        $format = substr($format, strpos($format, ".") +1);
         switch ($format) {
-            case "xlsx":
+            case "xls":
                 $response = $this->render('downtimeperiod/viewturns.xlsx.twig', array(
                     'downtimePeriod' => $downtimePeriod,
                 ));
+                $disposition = $response->headers->makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    urlencode($downtimePeriod->getName())
+                );
+                $response->headers->set('Content-Disposition', $disposition);
                 $response->headers->set('Content-Type', 'application/vnd.ms-excel');
                 return $response;
                 break;
