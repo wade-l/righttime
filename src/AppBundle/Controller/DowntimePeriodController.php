@@ -107,7 +107,7 @@ class DowntimePeriodController extends Controller
                 ));
                 $disposition = $response->headers->makeDisposition(
                     ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                    urlencode($downtimePeriod->getName())
+                    urlencode($downtimePeriod->getName()) . '.xls'
                 );
                 $response->headers->set('Content-Disposition', $disposition);
                 $response->headers->set('Content-Type', 'application/vnd.ms-excel');
