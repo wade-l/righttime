@@ -2,32 +2,43 @@
 
 {% block body %}
     <h1>Downtime Turns for {{ downtimePeriod.name }} in {{ downtimePeriod.game.name }}</h1>
-    <h2>Downtime period is currently {{ downtimePeriod.status }}.</h2>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ downtimePeriod.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ downtimePeriod.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ downtimePeriod.description }}</td>
-            </tr>
-            <tr>
-                <th>Open</th>
-                <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Close</th>
-                <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                <h2>Downtime period is currently {{ downtimePeriod.status }}.</h2>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ downtimePeriod.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ downtimePeriod.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ downtimePeriod.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Open</th>
+                            <td>{% if downtimePeriod.open %}{{ downtimePeriod.open|date('Y-m-d') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Close</th>
+                            <td>{% if downtimePeriod.close %}{{ downtimePeriod.close|date('Y-m-d') }}{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <a class="btn" href="{{ path('downtimeperiod_viewturns', {'id': downtimePeriod.id, 'format': 'downtimeperiod.xlsx'}) }}">
+                <p><i class="fas fa-file-excel fa-2x"></i></p>
+                <p>Download as Excel Sheet</p>
+                </a>
+            </div>
+        </div>
+    </div>
     <table class="table">
         <tbody>
         <tr>

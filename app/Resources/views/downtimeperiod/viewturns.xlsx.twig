@@ -1,8 +1,33 @@
-{% xlsdocument {format: 'xls'} %}
-    {% xlssheet 'Sheet' %}
+{% xlsdocument {    format: 'xls',
+                    title: 'Downtime Turns'} %}
+    {% xlssheet 'Downtime Turns' %}
         {% xlsrow %}
             {% xlscell { style: { font: { size: '18'} } } %} {{downtimePeriod.name}}{% endxlscell %}
         {% endxlsrow %}
+        {% xlsrow %}
+            {% xlscell {style: { font: { bold: 'true'} } } %}Character{% endxlscell %}
+            {% xlscell {style: { font: { bold: 'true'} } } %}Player{% endxlscell %}
+            {% xlscell {style: { font: { bold: 'true'} } } %}Action{% endxlscell %}
+            {% xlscell {style: { font: { bold: 'true'} } } %}Description{% endxlscell %}
+        {% endxlsrow %}
+        {% for turn in downtimePeriod.turns %}
+            {% for action in turn.acts %}
+            {% xlsrow %}
+                {% xlscell %}{{turn.character.name}}{% endxlscell %}
+                {% xlscell %}{{turn.character.player.username}}{% endxlscell %}
+                {% xlscell %}{{action.summary}}{% endxlscell %}
+                {% xlscell %}{{action.description}}{% endxlscell %}
+            {% endxlsrow %}
+            {% endfor %}
+            {% if turn.comments %}
+                    {% xlsrow %}
+                        {% xlscell %}{{turn.character.name}}{% endxlscell %}
+                        {% xlscell %}{{turn.character.player.username}}{% endxlscell %}
+                        {% xlscell %}Comments:{% endxlscell %}
+                        {% xlscell %}{{turn.comments}}{% endxlscell %}
+                    {% endxlsrow %}
+            {% endif %}
+        {% endfor %}        
     {% endxlssheet %}
 
 {% endxlsdocument %}
