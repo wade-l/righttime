@@ -2,6 +2,12 @@
 
 {% block body %}
     <h1>{{ turn.downtimePeriod }} for {{ turn.character }}</h1>
+    {% if turn.downtimePeriod.instructions is not empty %}
+    <p>
+        <h2>Instructions</h2>
+        {{turn.downtimePeriod.instructions}}
+    </p>
+    {% endif %}
 
     {{ form_start(form) }}
         <ul class="acts" data-prototype="{{ form_widget(form.acts.vars.prototype)|e('html_attr') }}">
