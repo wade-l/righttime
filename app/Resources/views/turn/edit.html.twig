@@ -2,10 +2,10 @@
 
 {% block body %}
     <h1>{{ turn.downtimePeriod }} for {{ turn.character }}</h1>
-    {% if turn.downtimePeriod.instructions is not empty %}
+    {% if turn.downtimePeriod.game.instructions is not empty %}
     <p>
         <h2>Instructions</h2>
-        {{turn.downtimePeriod.instructions}}
+        {{turn.downtimePeriod.game.instructions}}
     </p>
     {% endif %}
 

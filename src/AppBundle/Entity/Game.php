@@ -41,6 +41,13 @@ class Game
     /**
      * @var string
      *
+     * @ORM\Column(name="instructions", type="text", nullable=true)
+     */
+    private $instructions;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="system", type="string", length=255, nullable=true)
      */
     private $system;
@@ -213,6 +220,30 @@ class Game
     public function setDowntimePeriods($downtimePeriods)
     {
         $this->downtimePeriods = $downtimePeriods;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of instructions
+     *
+     * @return  string
+     */ 
+    public function getInstructions()
+    {
+        return $this->instructions;
+    }
+
+    /**
+     * Set the value of instructions
+     *
+     * @param  string  $instructions
+     *
+     * @return  self
+     */ 
+    public function setInstructions(string $instructions)
+    {
+        $this->instructions = $instructions;
 
         return $this;
     }
