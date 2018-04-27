@@ -5,7 +5,7 @@
     {% if turn.downtimePeriod.game.instructions is not empty %}
     <p>
         <h2>Instructions</h2>
-        {{turn.downtimePeriod.game.instructions}}
+        {{turn.downtimePeriod.game.instructions | nl2br }}
     </p>
     {% endif %}
 
